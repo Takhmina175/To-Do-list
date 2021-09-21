@@ -37,10 +37,12 @@ body {
   padding: 10px;
   border-bottom: 1px solid #f6f6f6;
 }
+
 #input {
   border: none;
   font-style: italic;
 }
+
 .elem {
   display: flex;
   justify-content: space-between;

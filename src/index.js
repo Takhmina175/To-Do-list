@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash';// eslint-disable-line no-unused-vars
 import './style.css';
 
 const UNCHECKED = '<i class="bi bi-square"></i>';
@@ -31,5 +31,5 @@ arrs.forEach((todoEl) => {
   indx.setAttribute('class', 'verticalDots');
   indx.innerHTML = INDEX;
   div.append(indx);
-  todoList.append(div)
+  todoList.append(div);
 });
