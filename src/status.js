@@ -1,19 +1,22 @@
 class Status {
   constructor(arrs, description, completed = false) {
+    this.arrs = [];
     this.index = arrs.length + 1;
     this.description = description;
     this.completed = completed;
-    this.arrs = JSON.parse(localStorage.getItem('arrs')) || [];
   }
 
   static changeStatus(arrs, index) {
-    const x = document.getElementById('myCheck').checked;
-    if (x) {
-      arrs[index].completed = false;
+    if (this.arrs[index].completed === true) {
+      this.arrs[index].completed = false;
     } else {
-      arrs[index].completed = true;
+      this.arrs[index].completed = true;
     }
-    localStorage.setItem('arrs', JSON.stringify(arrs));
+    localStorage.setItem('todoList', JSON.stringify(this.arrs));
+  }
+
+  static loadFromStorage() {
+    this.arrs = JSON.parse(localStorage.getItem('todoList')) || [];
   }
 }
 export default Status;

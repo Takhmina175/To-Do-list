@@ -1,25 +1,12 @@
 import _ from 'lodash'; // eslint-disable-line no-unused-vars
 import './style.css';
-import status from './status';
+import Status from './status';
 
 const INDEX = '<i class="bi bi-three-dots-vertical"></i>';
 
-const arrs = [
-  {
-    completed: true,
-    description: 'Buy milk from the market',
-    index: 0,
-  },
-  {
-    completed: false,
-    description: 'Prepare meal',
-    index: 1,
-  },
-];
-
 const todoList = document.getElementById('todo-list');
-
-arrs.forEach((todoEl) => {
+Status.loadFromStorage();
+Status.arrs.forEach((todoEl) => {
   const div = document.createElement('div');
   div.setAttribute('class', 'elem');
 
@@ -30,12 +17,13 @@ arrs.forEach((todoEl) => {
   input.setAttribute('type', 'checkbox');
   input.setAttribute('id', 'myCheck');
   input.className = 'checkItem';
+  input.checked = todoEl.completed;
 
   div.addEventListener('input', (e) => {
     const item2Bechanged = e.target.parentElement.parentElement;
     const nodes = Array.from(todoList.children);
     const index = nodes.indexOf(item2Bechanged);
-    status.changeStatus(arrs, parseInt(index, 10));
+    Status.changeStatus(Status.arrs, parseInt(index, 10));
   });
 
   const newTask = document.createElement('p');
