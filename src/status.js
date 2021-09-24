@@ -1,35 +1,19 @@
 class Status {
-  constructor() {
-    this.arrs = [
-      {
-        completed: true,
-        description: 'Buy milk from the market',
-        index: 0,
-      },
-      {
-        completed: false,
-        description: 'Prepare meal',
-        index: 1,
-      },
-    ];
-
+  constructor(arrs, description, completed = false) {
+    this.index = arrs.length + 1;
+    this.description = description;
+    this.completed = completed;
     this.arrs = JSON.parse(localStorage.getItem('arrs')) || [];
   }
 
-  static changeStatus() {
+  static changeStatus(arrs, index) {
     const x = document.getElementById('myCheck').checked;
     if (x) {
-      this.arrs.completed = !this.arrs.completed;
+      arrs[index].completed = false;
+    } else {
+      arrs[index].completed = true;
     }
-    localStorage.setItem('arrs', JSON.stringify(this.arrs));
-    console.log(this.arrs);
+    localStorage.setItem('arrs', JSON.stringify(arrs));
   }
-
-  // const toggleBullet = (arrs, id) => {
-  //   const bullet = arrs.find((task) => task.id === id);
-  //   if (bullet) {
-  //   bullet.completed = !bullet.completed;
-  //   }
-  // };
 }
 export default Status;

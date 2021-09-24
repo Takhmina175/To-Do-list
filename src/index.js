@@ -1,26 +1,25 @@
 import _ from 'lodash'; // eslint-disable-line no-unused-vars
 import './style.css';
-import status from './status.js';
+import status from './status';
 
 const INDEX = '<i class="bi bi-three-dots-vertical"></i>';
 
-// status.arrs = [
-//   {
-//     completed: true,
-//     description: 'Buy milk from the market',
-//     index: 0,
-//   },
-//   {
-//     completed: false,
-//     description: 'Prepare meal',
-//     index: 1,
-//   },
-// ];
-// arrs = JSON.parse(localStorage.getItem('arr')) || [];
+const arrs = [
+  {
+    completed: true,
+    description: 'Buy milk from the market',
+    index: 0,
+  },
+  {
+    completed: false,
+    description: 'Prepare meal',
+    index: 1,
+  },
+];
 
 const todoList = document.getElementById('todo-list');
 
-status.arrs.forEach((todoEl) => {
+arrs.forEach((todoEl) => {
   const div = document.createElement('div');
   div.setAttribute('class', 'elem');
 
@@ -31,16 +30,13 @@ status.arrs.forEach((todoEl) => {
   input.setAttribute('type', 'checkbox');
   input.setAttribute('id', 'myCheck');
   input.className = 'checkItem';
-  input.addEventListener('change', status.changeStatus);
 
-  // div.addEventListener('click', (e) => {
-  //   const id = e.target.className;
-  //   const getclasses = id.split(' ');
-  //   const item2BeRemoved = e.target.parentElement.parentElement;
-  //   const nodes = Array.from(todoList.children);
-  //   const index = nodes.indexOf(item2BeRemoved);
-  //   toggleBullet(arrs, index);
-  // });
+  div.addEventListener('input', (e) => {
+    const item2Bechanged = e.target.parentElement.parentElement;
+    const nodes = Array.from(todoList.children);
+    const index = nodes.indexOf(item2Bechanged);
+    status.changeStatus(arrs, parseInt(index, 10));
+  });
 
   const newTask = document.createElement('p');
   newTask.innerText = todoEl.description;
