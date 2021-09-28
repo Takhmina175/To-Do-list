@@ -11,22 +11,30 @@
     <title>Todo list</title>
   </head>
   <body>
-  <div class="container">
-    <header>
-      <div class="header">
-        <h3>Today's To Do</h3>
-        <i class="bi bi-arrow-repeat"></i>
-      </div>
-    </header>
-    <main>
-      <div id="inputTask">
-        <input type="text" id="input" placeholder= "Add to your list..." /><br />
-        <i class="bi bi-arrow-return-left"></i>
-      </div>
-      <div id="todo-list"></div>
-      
-      <div id="clearAll">Clear All Completed</div>
-    </main>
-  </div>
+    <div class="container">
+      <header>
+        <div class="header">
+          <h3>Today's To Do</h3>
+          <i class="bi bi-arrow-repeat"></i>
+        </div>
+      </header>
+      <main>
+        <div id="inputTask">
+          <form action="#" method="post" class="inputForm">
+            <input
+              type="text"
+              id="inputText"
+              placeholder="Add to your list..."
+            /><br />
+            <div id="returnBtn">
+              <i class="bi bi-arrow-return-left"></i>
+            </div>
+          </form>
+        </div>
+        <div id="todo-list"></div>
+
+        <div id="clearAll">Clear All Completed</div>
+      </main>
+    </div>
   </body>
 </html>

@@ -32,15 +32,18 @@ body {
 }
 
 #inputTask {
-  display: flex;
-  justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #f6f6f6;
 }
 
-#input {
+#inputText {
   border: none;
   font-style: italic;
+  width: 95%;
+}
+.inputForm{
+  display: flex;
+  justify-content: space-between;
 }
 
 .elem {
@@ -66,4 +69,8 @@ p {
 
 #btnCheck {
   padding-right: 5px;
+}
+.lineThrough{
+  text-decoration: line-through;
+  color: #8c8c8c;
 }
