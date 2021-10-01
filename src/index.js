@@ -2,57 +2,133 @@ import _ from 'lodash'; // eslint-disable-line no-unused-vars
 import './style.css';
 import Library from './library';
 
-const INDEX = '<i class="bi bi-three-dots-vertical"></i>';
-const todoList = document.getElementById('todo-list');
 const inputForm = document.querySelector('.inputForm');
-const ptext = document.querySelector('#ptext');
-const arr = Library.loadFromStorage();
+const clearCheckedEl = document.querySelector('#clearAll');
+const mainArr = new Library();
+const arr = mainArr.loadFromStorage();
 
-Library.loadFromStorage();
+mainArr.loadFromStorage();
 
-function render(inputValue) {
-  Library.arrs.forEach((todoEl) => {
-    const div = document.createElement('div');
-    div.setAttribute('class', 'elem');
-    // this will create a div for chekbox btn
-    const divBtn = document.createElement('div');
-    divBtn.setAttribute('id', 'btnCheck');
-    // this will create a squre button
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('id', 'myCheck');
-    input.className = 'checkItem';
-    input.checked = todoEl.completed;
-    divBtn.append(input);
-    div.append(divBtn);
-    todoList.append(div);
-    // this will output an inputText content
-    const newTask = document.createElement('p');
-    newTask.className = 'ptext';
-    newTask.innerText = todoEl.description;
-    div.append(newTask);
-    todoList.append(div);
-    // this will vertical three dots
-    const indx = document.createElement('div');
-    indx.setAttribute('class', 'verticalDots');
-    indx.innerHTML = INDEX;
-    div.append(indx);
-    todoList.append(div);
+mainArr.render();
 
-    div.addEventListener('input', (e) => {
-      const item2Bechanged = e.target.parentElement.parentElement;
-      const nodes = Array.from(todoList.children);
-      const index = nodes.indexOf(item2Bechanged);
-      Library.changeStatus(Library.arrs, parseInt(index, 10));
-    });
-  });
-}
-window.addEventListener('load', render(arr));
+// window.addEventListener('load', Library.render(arr));
+
+
+// Add Task
 inputForm.addEventListener('submit', (event) => {
   const inputText = document.querySelector('#inputText').value;
   event.preventDefault();
-  Library.addTask(arr, inputText);
-  Library.saveToStorage(arr);
-  render(arr);
+  mainArr.addTask(inputText);
+  mainArr.saveToStorage(arr);
+  mainArr.render(arr);
   document.getElementById('inputText').value = '';
+});
+// Delete Task
+const todoListElem = document.querySelectorAll('.verticalDots');
+Array.from(todoListElem).forEach((i) => {
+  i.addEventListener('click', (e) => {
+    const elem = e.target.parentElement.parentElement;
+    const parentEl = elem.parentNode;
+    const nodes = Array.from(parentEl.children);
+    const index = nodes.indexOf(elem);
+    Library.deleteTask(index);
+    mainArr.saveToStorage(arr);
+    Library.render.render(arr);
+  });
+});
+
+// // Edit Task
+// const inputCont = document.querySelectorAll('.ptext');
+// for (let i = 0; i < inputCont.length; i += 1) {
+//   inputCont[i].onclick = function () {
+//     if (this.hasAttribute('data-clicked')) {
+//       return;
+//     }
+//     this.setAttribute('data-clicked', 'yes');
+//     this.setAttribute('data-text', this.innerHTML);
+
+//     const input = document.createElement('input');
+//     input.setAttribute('type', 'text');
+//     input.setAttribute('id', 'newInput');
+//     input.value = this.innerHTML;
+//     input.onblur = function () {
+//       const inputParentEl = input.parentElement;
+//       const origText = input.parentElement.getAttribute('data-text');
+//       const currentText = this.value;
+
+//       if (origText !== currentText) {
+//         inputParentEl.removeAttribute('data-clicked');
+//         inputParentEl.removeAttribute('data-text');
+//         inputParentEl.innerHTML = currentText;
+//       } else {
+//         inputParentEl.removeAttribute('data-clicked');
+//         inputParentEl.removeAttribute('data-text');
+//         inputParentEl.innerHTML = origText;
+//       }
+//     };
+//     input.onkeydown = function (event) {
+//       if (event.key === 'Enter') {
+//         this.onblur();
+//       }
+//     };
+//     this.innerHTML = '';
+//     this.append(input);
+//     this.firstElementChild.select();
+//   };
+// }
+
+// Events for Edit Description
+
+const inputs = Array.from(document.querySelectorAll('.ptext'));
+inputs.forEach((input) => {
+  input.addEventListener('input', (e) => {
+    const elem = e.target.parentElement.parentElement;
+    const parentEl = elem.parentNode;
+    const nodes = Array.from(parentEl.children);
+    const index = nodes.indexOf(elem);
+
+    const { value } = e.target;
+    Library.updateTask(index, value);
+  });
+});
+
+const inputCont = Array.from(document.querySelectorAll('.ptext'));
+for (let i = 0; i < inputCont.length; i += 1) {
+  inputCont[i].onclick = function () {
+    if (this.hasAttribute('data-clicked')) {
+      return;
+    }
+    this.setAttribute('data-clicked', 'yes');
+    this.setAttribute('data-text', this.innerHTML);
+
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('id', 'newInput');
+    input.value = this.innerHTML;
+    input.onblur = function () {
+      const inputParentEl = input.parentElement;
+      const origText = input.parentElement.getAttribute('data-text');
+      const currentText = this.value;
+
+      if (origText !== currentText) {
+        inputParentEl.removeAttribute('data-clicked');
+        inputParentEl.removeAttribute('data-text');
+        inputParentEl.innerHTML = currentText;
+      } else {
+        inputParentEl.removeAttribute('data-clicked');
+        inputParentEl.removeAttribute('data-text');
+        inputParentEl.innerHTML = origText;
+      }
+    };
+
+    this.innerHTML = '';
+    this.append(input);
+    this.firstElementChild.select();
+  };
+}
+// Clear All Tasks
+clearCheckedEl.addEventListener('click', () => {
+  Library.clearAll(arr);
+  mainArr.saveToStorage(arr);
+  Library.render.render(arr);
 });

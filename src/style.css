@@ -15,9 +15,8 @@ body {
 .container {
   background-color: white;
   width: 40%;
-  margin-top: 5em;
+  margin: 5em auto;
   border: 1px solid black;
-  padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -41,6 +40,23 @@ body {
   font-style: italic;
   width: 95%;
 }
+
+#inputText:focus{
+  outline: none;
+  border: none;
+}
+
+#newInput{
+  border: none;
+  font-style: italic;
+  width: 95%;
+}
+
+#newInput:focus{
+  outline: none;
+  border: none;
+}
+
 .inputForm{
   display: flex;
   justify-content: space-between;
@@ -62,15 +78,24 @@ p {
 }
 
 #clearAll {
-  text-align: center;
-  background-color: #f6f6f6;
-  padding: 10px 0;
+    text-align: center;
+    background-color: #f6f6f6;
+    padding: 10px 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border: none;
+    font-size: medium;
+    color: #b8b8b8;
+    font-family: auto;
 }
 
 #btnCheck {
   padding-right: 5px;
 }
+
 .lineThrough{
   text-decoration: line-through;
   color: #8c8c8c;
 }
+
